@@ -24,13 +24,14 @@ class SheduleController {
   }
 
   async createSchedule(req, res) {
+    console.log(req.body);
     const schedule = await ScheduleModel.create(req.body);
     res.send(schedule);
   }
 
   async putSchedule(req, res) {
     const deleteToDo = await ScheduleModel.remove();
-
+console.log(req.body);
     const newSchedule = await ScheduleModel.create(req.body);
     res.send(newSchedule);
   }
