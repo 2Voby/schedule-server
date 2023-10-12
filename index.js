@@ -15,11 +15,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(
   cors({
-    origin: [
-      "https://lyceum-schedule.ztu.edu.ua",
-      "https://script.google.com",
-      "http://localhost:5403",
-    ], // Укажите разрешенный источник
+    origin: '*', // Укажите разрешенный источник
     methods: ["GET", "POST", "PUT", "DELETE"], // Укажите разрешенные HTTP методы
     allowedHeaders: ["Content-Type", "Authorization"], // Укажите разрешенные заголовки
   })
