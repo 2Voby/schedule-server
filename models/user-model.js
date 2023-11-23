@@ -5,13 +5,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   isActivated: { type: Boolean, default: false },
   activationLink: { type: String },
-  paymentHistory: {
-    queue: { type: Array },
-    authorized: { type: Array },
-  },
-  moneyTokens: { type: Number },
-  userCart: { type: Array },
-  userOrders: { type: Array },
+  isAdmin: { type: Boolean, default: false },
 });
 
 module.exports = model("User", UserSchema);

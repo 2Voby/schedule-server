@@ -68,6 +68,15 @@ class UserController {
     }
   }
 
+  async createUserClientId(req, res, next) {
+    try {
+      const userData = userService.createUserClientId();
+      return res.json(userData);
+    } catch (e) {
+      // next(e);
+    }
+  }
+
   // async refresh(req, res, next) {
   //   try {
   //     const { refreshToken } = req.cookies;

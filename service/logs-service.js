@@ -18,7 +18,7 @@ class logsService {
       let currentDate = new Date(formattedDate).getTime();
       let thisDate = new Date(dayElement.Date).getTime();
       if (thisDate == currentDate) {
-        dayElement.Users.push(user);
+        // dayElement.Users.push(user);
         dayElement.OnlinePerDay = dayElement.OnlinePerDay + 1;
         dayToChangeId = dayElement._id;
       }
@@ -30,7 +30,7 @@ class logsService {
         { _id: dayToChangeId },
         {
           OnlinePerDay: updateItem.OnlinePerDay,
-          Users: updateItem.Users,
+          // Users: updateItem.Users,
         },
         { useFindAndModify: false }
       );
@@ -38,7 +38,7 @@ class logsService {
       await logsModel.create({
         Date: formattedDate,
         OnlinePerDay: 1,
-        Users: [user],
+        // Users: [user],
       });
     }
   }

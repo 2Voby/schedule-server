@@ -2,12 +2,12 @@ module.exports = class UserDto {
   email;
   id;
   isActivated;
-  moneyTokens;
+  isAdmin;
 
   constructor(model) {
     this.email = model.email;
     this.id = model._id;
     this.isActivated = model.isActivated;
-    this.moneyTokens = model.moneyTokens;
+    this.isAdmin = model.isAdmin;
   }
 };

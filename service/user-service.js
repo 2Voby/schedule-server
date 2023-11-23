@@ -114,6 +114,11 @@ class UserService {
     return userMoney;
   }
 
+  createUserClientId() {
+    const userClientid = uuid.v4(); // v34fa-asfasf-142saf-sa-asf
+    return { id: userClientid };
+  }
+
   async getUser(req, res) {
     const authorizationHeader = req.headers.authorization;
     const accessToken = authorizationHeader.split(" ")[1];
