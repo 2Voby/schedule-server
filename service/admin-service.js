@@ -9,8 +9,6 @@ class AdminService {
       throw ApiError.BadRequest("Інформацію не знайдено");
     }
 
-    console.log(logs);
-
     return logs;
   }
 
@@ -30,9 +28,10 @@ class AdminService {
     let newAnonce = await anoncementsModel.create({
       title: title,
       text: text,
-      finnalyDate: date,
-      finnalyTime: time,
+      finallyDate: date,
+      finallyTime: time,
       image: image,
+      updatedAt: new Date(),
     });
 
     if (!newAnonce) {
@@ -52,19 +51,17 @@ class AdminService {
 
     anonce.title = title;
     anonce.text = text;
-    anonce.finnalyDate = date;
+    anonce.finallyDate = date;
     anonce.image = image;
-    anonce.finnalyTime = time;
+    anonce.finallyTime = time;
+    anonce.updatedAt = new Date();
 
     await anonce.save();
     return anonce;
   }
 
   async deleteAnoncement(id) {
-    console.log(id, "service");
-
     let anonce = await anoncementsModel.findOneAndDelete({ _id: id });
-    // console.log(anonce);
 
     if (!anonce) {
       throw ApiError.BadRequest(`Помилка! Анонса за ID: ${id} не існує`);

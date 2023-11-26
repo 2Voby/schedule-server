@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const router = require("./router/index");
 const errorMiddleware = require("./middlewares/error-middleware");
-const logsModel = require("./models/logs-model");
+const anoncementsModel = require("./models/anoncements-model");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -38,10 +38,22 @@ const start = async () => {
 
     app.listen(PORT, () => console.log(`Server started on PORT = ${PORT}`));
 
-    // let item = await logsModel.findOneAndUpdate(
-    //   { Date: "2023-10-13" },
-    //   { Users: null }
-    // );
+    // let items = await anoncementsModel.find();
+
+    // let i = 8;
+    // for (const item of items) {
+    //   if (i > 0) {
+    //     let newAnonce = await anoncementsModel.create({
+    //       title: item.title,
+    //       text: item.text,
+    //       finallyDate: item.finnalyDate,
+    //       finallyTime: item.finnalyTime,
+    //       image: item.image,
+    //     });
+    //     i--;
+    //   }
+    // }
+
     // console.log(item);
 
     // await currDataInfo.save();

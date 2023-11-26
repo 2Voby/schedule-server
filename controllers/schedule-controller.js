@@ -3,12 +3,13 @@ const LogsModel = require("../models/logs-model");
 const logsService = require("../service/logs-service");
 const anoncementsModel = require("../models/anoncements-model");
 const scheduleService = require("../service/schedule-service");
+const ApiError = require("../exceptions/api-error");
 
 class SheduleController {
   async checkReq(req, res, next) {
     try {
       //   let responce = JSON.parse(req.body);
-      console.log(req.body);
+
       return res.json(req.body);
     } catch (e) {
       next(e);
@@ -32,7 +33,7 @@ class SheduleController {
 
   async putSchedule(req, res) {
     let schedule = req.body;
-    console.log(schedule);
+
     const deleteToDo = await ScheduleModel.remove();
     const newSchedule = await ScheduleModel.create(schedule);
     return res.json(newSchedule);
@@ -59,7 +60,6 @@ class SheduleController {
   async getAllAnoncements(req, res) {
     try {
       let responce = await anoncementsModel.find();
-      // console.log(responce);
       return res.json(responce);
     } catch (error) {
       return res.json(error);
@@ -69,7 +69,9 @@ class SheduleController {
   async getClosestEvent(req, res) {
     try {
       let anoce = await scheduleService.getClosestEvent();
-      // console.log("fdsfsdfd", anoce);
+      if (!anoce) {
+        return res.status(400).json("Подію не знайдено");
+      }
       return res.json(anoce);
     } catch (error) {
       return res.json(error);

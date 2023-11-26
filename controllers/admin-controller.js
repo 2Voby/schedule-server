@@ -41,7 +41,7 @@ class AdminController {
   async editAnoncement(req, res, next) {
     try {
       let { id, title, text, image, date, time } = req.body;
-      console.log(id, title, text, image, date, time);
+
       const newAnoncement = await adminService.editAnoncement(
         id,
         title,
@@ -59,7 +59,7 @@ class AdminController {
   async deleteAnoncement(req, res, next) {
     try {
       let { anonceId } = req.body;
-      console.log(anonceId, "controller");
+
       const newAnoncement = await adminService.deleteAnoncement(anonceId);
       return res.json(newAnoncement);
     } catch (e) {

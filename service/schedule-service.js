@@ -1,3 +1,5 @@
+const ApiError = require("../exceptions/api-error");
+
 const anoncementsModel = require("../models/anoncements-model");
 
 // const logsModel = require("../models/logs-model");
@@ -5,8 +7,8 @@ const anoncementsModel = require("../models/anoncements-model");
 class scheduleService {
   async getClosestEvent() {
     let anonces = await anoncementsModel.find();
-    const closestAnonce = findClosestOrToday(anonces);
-    console.log(closestAnonce);
+    let closestAnonce = null;
+    closestAnonce = findClosestOrToday(anonces);
     return closestAnonce;
   }
 }
@@ -16,22 +18,21 @@ module.exports = new scheduleService();
 function findClosestOrToday(anocnes) {
   let currDate = new Date();
   currDate.setHours(0, 0, 0, 0);
-  // let closestelement = null
   let allUpcomingEvents = [];
   anocnes.forEach((anonce) => {
-    let anonceDate = new Date(anonce.finnalyDate);
-
+    let anonceDate = new Date(anonce.finallyDate);
     if (currDate <= anonceDate) {
       allUpcomingEvents.push(anonce);
     }
   });
+  let closestDateObj = null;
+  if (allUpcomingEvents.length > 0) {
+    closestDateObj = allUpcomingEvents.reduce((closest, current) => {
+      const closestDate = new Date(closest.finallyDate);
+      const currentDate = new Date(current.finallyDate);
+      return currentDate < closestDate ? current : closest;
+    });
+  }
 
-  const closestDateObj = allUpcomingEvents.reduce((closest, current) => {
-    const closestDate = new Date(closest.finnalyDate);
-    const currentDate = new Date(current.finnalyDate);
-    return currentDate < closestDate ? current : closest;
-  });
-  console.log(allUpcomingEvents);
-  console.log(closestDateObj);
   return closestDateObj;
 }

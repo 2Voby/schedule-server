@@ -3,6 +3,7 @@ const userController = require("../controllers/user-controller");
 const router = new Router();
 const { body } = require("express-validator");
 const authMiddleware = require("../middlewares/auth-middleware");
+const adminMiddleware = require("../middlewares/admin-middleware");
 const renderController = require("../controllers/render-controller");
 const scheduleController = require("../controllers/schedule-controller");
 const adminController = require("../controllers/admin-controller");
@@ -35,21 +36,29 @@ router.delete("/schedule", scheduleController.deleteSchedule);
 
 router.post("/schedule/noteonline", scheduleController.noteOnline);
 
-router.get("/admin/getOnline", authMiddleware, adminController.getOnline);
+router.get(
+  "/admin/getOnline",
+  [authMiddleware, adminMiddleware],
+  adminController.getOnline
+);
 
 router.get(
   "/admin/anoncement",
-  authMiddleware,
+  [authMiddleware, adminMiddleware],
   adminController.getAllAnoncements
 );
 
 router.post(
   "/admin/anoncement",
-  authMiddleware,
+  [authMiddleware, adminMiddleware],
   adminController.createAnoncement
 );
 
-router.put("/admin/anoncement", authMiddleware, adminController.editAnoncement);
+router.put(
+  "/admin/anoncement",
+  [authMiddleware, adminMiddleware],
+  adminController.editAnoncement
+);
 
 router.get("/anonces", scheduleController.getAllAnoncements);
 
@@ -57,7 +66,7 @@ router.get("/anoncesClosest", scheduleController.getClosestEvent);
 
 router.post(
   "/admin/anoncement-delete",
-  authMiddleware,
+  [authMiddleware, adminMiddleware],
   adminController.deleteAnoncement
 );
 
