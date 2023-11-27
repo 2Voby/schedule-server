@@ -50,7 +50,8 @@ class SheduleController {
 
   async noteOnline(req, res) {
     try {
-      let responce = await logsService.noteUserActivity(req);
+      let { clientId } = req.body;
+      let responce = await logsService.noteUserActivity(clientId);
       return res.json("ok");
     } catch (error) {
       res.json(error);
@@ -60,6 +61,15 @@ class SheduleController {
   async getAllAnoncements(req, res) {
     try {
       let responce = await anoncementsModel.find();
+      return res.json(responce);
+    } catch (error) {
+      return res.json(error);
+    }
+  }
+
+  async getPinnedAnoncements(req, res) {
+    try {
+      let responce = await anoncementsModel.find({ isPinned: true });
       return res.json(responce);
     } catch (error) {
       return res.json(error);

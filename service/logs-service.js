@@ -1,8 +1,7 @@
 const logsModel = require("../models/logs-model");
 
 class logsService {
-  async noteUserActivity(req) {
-    let user = req.body;
+  async noteUserActivity(userId) {
     let currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -18,7 +17,6 @@ class logsService {
       let currentDate = new Date(formattedDate).getTime();
       let thisDate = new Date(dayElement.Date).getTime();
       if (thisDate == currentDate) {
-        // dayElement.Users.push(user);
         dayElement.OnlinePerDay = dayElement.OnlinePerDay + 1;
         dayToChangeId = dayElement._id;
       }

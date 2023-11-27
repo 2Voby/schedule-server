@@ -59,8 +59,14 @@ router.put(
   [authMiddleware, adminMiddleware],
   adminController.editAnoncement
 );
+router.put(
+  "/admin/anoncement/pin",
+  [authMiddleware, adminMiddleware],
+  adminController.pinAnoncement
+);
 
 router.get("/anonces", scheduleController.getAllAnoncements);
+router.get("/anonces/pinned", scheduleController.getPinnedAnoncements);
 
 router.get("/anoncesClosest", scheduleController.getClosestEvent);
 

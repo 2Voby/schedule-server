@@ -24,13 +24,14 @@ class AdminController {
 
   async createAnoncement(req, res, next) {
     try {
-      let { title, text, image, date, time } = req.body;
+      let { title, text, image, date, time, pinStatus } = req.body;
       const newAnoncement = await adminService.createAnoncement(
         title,
         text,
         date,
         time,
-        image
+        image,
+        pinStatus
       );
       return res.json(newAnoncement);
     } catch (e) {
@@ -50,6 +51,16 @@ class AdminController {
         time,
         image
       );
+      return res.json(newAnoncement);
+    } catch (e) {
+      next(e);
+    }
+  }
+  async pinAnoncement(req, res, next) {
+    try {
+      let { id, pinStatus } = req.body;
+
+      const newAnoncement = await adminService.pinAnoncement(id, pinStatus);
       return res.json(newAnoncement);
     } catch (e) {
       next(e);

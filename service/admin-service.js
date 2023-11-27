@@ -20,7 +20,7 @@ class AdminService {
     return anoncements;
   }
 
-  async createAnoncement(title, text, date, time, image) {
+  async createAnoncement(title, text, date, time, image, pinStatus) {
     if (!title && !date) {
       throw ApiError.BadRequest("Неправильний формат вводу, спробуйте ще раз");
     }
@@ -32,6 +32,7 @@ class AdminService {
       finallyTime: time,
       image: image,
       updatedAt: new Date(),
+      isPinned: pinStatus,
     });
 
     if (!newAnonce) {
@@ -57,6 +58,19 @@ class AdminService {
     anonce.updatedAt = new Date();
 
     await anonce.save();
+    return anonce;
+  }
+
+  async pinAnoncement(id, pinStatus) {
+    let anonce = await anoncementsModel.findOneAndUpdate(
+      { _id: id },
+      { isPinned: pinStatus }
+    );
+    if (!anonce) {
+      throw ApiError.BadRequest(
+        `Анонс з таким ID: (${id}), не знайдено в базі`
+      );
+    }
     return anonce;
   }
 

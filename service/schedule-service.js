@@ -19,20 +19,21 @@ function findClosestOrToday(anocnes) {
   let currDate = new Date();
   currDate.setHours(0, 0, 0, 0);
   let allUpcomingEvents = [];
+  let closestDate = null;
+
+  // Находим ближайшую дату и фильтруем все события на этот день
   anocnes.forEach((anonce) => {
     let anonceDate = new Date(anonce.finallyDate);
     if (currDate <= anonceDate) {
-      allUpcomingEvents.push(anonce);
+      if (!closestDate || anonceDate.getTime() === closestDate.getTime()) {
+        allUpcomingEvents.push(anonce);
+        closestDate = anonceDate;
+      } else if (anonceDate < closestDate) {
+        allUpcomingEvents = [anonce];
+        closestDate = anonceDate;
+      }
     }
   });
-  let closestDateObj = null;
-  if (allUpcomingEvents.length > 0) {
-    closestDateObj = allUpcomingEvents.reduce((closest, current) => {
-      const closestDate = new Date(closest.finallyDate);
-      const currentDate = new Date(current.finallyDate);
-      return currentDate < closestDate ? current : closest;
-    });
-  }
 
-  return closestDateObj;
+  return allUpcomingEvents;
 }
