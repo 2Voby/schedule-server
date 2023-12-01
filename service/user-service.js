@@ -6,7 +6,7 @@ const UserDto = require("../dtos/user-dto");
 const ApiError = require("../exceptions/api-error");
 
 class UserService {
-  async registration(email, password) {
+  async registration(email, password, name) {
     const candidate = await UserModel.findOne({ email });
     if (candidate) {
       throw ApiError.BadRequest(`Користувач з email:  ${email} вже існує`);
@@ -17,10 +17,13 @@ class UserService {
     const user = await UserModel.create({
       email,
       password: hashPassword,
+      name,
       activationLink,
       moneyTokens: 0,
       userCart: [],
     });
+
+    console.log(user, name, email, password);
     // await mailService.sendActivationMail(
     //   email,
     //   `${process.env.API_URL}/api/activate/${activationLink}`
