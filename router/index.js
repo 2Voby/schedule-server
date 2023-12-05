@@ -68,7 +68,7 @@ router.put(
 router.get("/anonces", scheduleController.getAllAnoncements);
 router.get("/anonces/pinned", scheduleController.getPinnedAnoncements);
 
-router.get("/anoncesClosest", scheduleController.getClosestEvent);
+router.get("/anonces/closest", scheduleController.getClosestEvent);
 
 router.post(
   "/admin/anoncement-delete",

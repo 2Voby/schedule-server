@@ -49,11 +49,12 @@ class AdminService {
         `Анонс з таким ID: (${id}), не знайдено в базі`
       );
     }
+    console.log(image);
 
     anonce.title = title;
     anonce.text = text;
     anonce.finallyDate = date;
-    anonce.image = image;
+    // anonce.image = image;
     anonce.finallyTime = time;
     anonce.updatedAt = new Date();
 
