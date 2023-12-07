@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const logsSchema = new mongoose.Schema({
   Date: String,
   OnlinePerDay: Number,
-  Users: JSON,
+  Users: { type: String, default: "[]" },
 });
 
 module.exports = mongoose.model("Logs", logsSchema);

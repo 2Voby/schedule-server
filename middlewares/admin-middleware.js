@@ -20,7 +20,7 @@ module.exports = async function (req, res, next) {
     }
     let userInBase = await userModel.findOne({ _id: userData.id });
 
-    if (!userInBase || !userInBase.isAdmin) {
+    if (!userInBase || !userInBase.roles.includes("ADMIN")) {
       return next(new ApiError(500, "В вас немає права доступу"));
     }
     next();

@@ -51,9 +51,11 @@ class SheduleController {
   async noteOnline(req, res) {
     try {
       let { clientId } = req.body;
+
       let responce = await logsService.noteUserActivity(clientId);
       return res.json("ok");
     } catch (error) {
+      console.log(error);
       res.json(error);
     }
   }

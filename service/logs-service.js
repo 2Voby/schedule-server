@@ -10,7 +10,7 @@ class logsService {
     const formattedDate = `${year}-${month}-${day}`;
 
     let dayToChangeId = null;
-    const currDataInfo = await logsModel.find();
+    let currDataInfo = await logsModel.find();
 
     for (let i = 0; i < currDataInfo.length; i++) {
       let dayElement = currDataInfo[i];
@@ -24,11 +24,19 @@ class logsService {
 
     if (dayToChangeId) {
       let updateItem = currDataInfo.find((item) => item._id == dayToChangeId);
+      let updateItemUsers = updateItem.Users;
+      if (updateItemUsers) {
+        updateItemUsers = JSON.parse(updateItemUsers);
+        if (!updateItemUsers.includes(userId)) {
+          updateItemUsers.push(userId);
+        }
+      }
+
       let updateLog = await logsModel.findOneAndUpdate(
         { _id: dayToChangeId },
         {
           OnlinePerDay: updateItem.OnlinePerDay,
-          // Users: updateItem.Users,
+          Users: JSON.stringify(updateItemUsers),
         },
         { useFindAndModify: false }
       );
@@ -36,7 +44,7 @@ class logsService {
       await logsModel.create({
         Date: formattedDate,
         OnlinePerDay: 1,
-        // Users: [user],
+        Users: JSON.stringify([userId]),
       });
     }
   }
