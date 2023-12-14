@@ -1,5 +1,6 @@
 const ApiError = require("../exceptions/api-error");
 const anoncementsModel = require("../models/anoncements-model");
+const bellsModel = require("../models/bells-model");
 const logsModel = require("../models/logs-model");
 
 class AdminService {
@@ -83,6 +84,24 @@ class AdminService {
     }
 
     return anonce;
+  }
+
+  async saveBells(bells) {
+    let deletedItems = await bellsModel.remove();
+    console.log(bells);
+    let bellsObject = await bellsModel.create({ bells: bells });
+    if (!bellsObject) {
+      throw ApiError.BadRequest(`Помилка! Збереження розкаладу занять`);
+    }
+    return bellsObject;
+  }
+
+  async getBells() {
+    let bellsObject = await bellsModel.find();
+    if (!bellsObject) {
+      throw ApiError.BadRequest(`Помилка отримання розкладу дзвінків! `);
+    }
+    return bellsObject;
   }
 }
 

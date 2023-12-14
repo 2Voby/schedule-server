@@ -42,6 +42,7 @@ router.get(
   adminController.getOnline
 );
 
+// anonces
 router.get(
   "/admin/anoncement",
   [authMiddleware, adminMiddleware],
@@ -74,6 +75,22 @@ router.post(
   "/admin/anoncement-delete",
   [authMiddleware, adminMiddleware],
   adminController.deleteAnoncement
+);
+
+// settings
+router.post(
+  "/admin/settings/bells",
+  [authMiddleware, adminMiddleware],
+  adminController.saveBells
+);
+
+router.get("/bells", adminController.getBells);
+
+// schedule
+router.get(
+  "/admin/schedule/links",
+  [authMiddleware, adminMiddleware],
+  adminController.getAdminScheduleLinks
 );
 
 // keep render onlone

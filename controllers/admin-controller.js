@@ -2,6 +2,7 @@ const userService = require("../service/user-service");
 const adminService = require("../service/admin-service");
 const { validationResult } = require("express-validator");
 const ApiError = require("../exceptions/api-error");
+const sheetsLinksModel = require("../models/sheetsLinks-model");
 
 class AdminController {
   async getOnline(req, res, next) {
@@ -73,6 +74,37 @@ class AdminController {
 
       const newAnoncement = await adminService.deleteAnoncement(anonceId);
       return res.json(newAnoncement);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async saveBells(req, res, next) {
+    try {
+      let { bells } = req.body;
+
+      const bellsSaved = await adminService.saveBells(bells);
+      return res.json(bellsSaved);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getBells(req, res, next) {
+    try {
+      const bellsSaved = await adminService.getBells();
+      return res.json(bellsSaved);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getAdminScheduleLinks(req, res, next) {
+    try {
+      // console.log(req.user.roles);
+
+      const groupsInfo = await sheetsLinksModel.find();
+      return res.json(groupsInfo);
     } catch (e) {
       next(e);
     }
