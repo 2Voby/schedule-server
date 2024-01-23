@@ -23,6 +23,11 @@ class SheduleController {
     } else {
       schedule = await ScheduleModel.find();
     }
+
+    if (!schedule) {
+      throw new ApiError(404, "Помилка отримання даних");
+    }
+
     return res.json(schedule);
   }
 
@@ -33,8 +38,9 @@ class SheduleController {
 
   async putSchedule(req, res) {
     let schedule = req.body;
-
-    const deleteToDo = await ScheduleModel.remove();
+    // видалення попереднього запису
+    await ScheduleModel.remove();
+    // збереження нових даних
     const newSchedule = await ScheduleModel.create(schedule);
     return res.json(newSchedule);
   }

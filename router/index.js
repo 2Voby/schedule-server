@@ -22,7 +22,6 @@ router.get("/activate/:link", userController.activate);
 router.post("/refresh", userController.refresh);
 router.get("/getUser", userController.getUser);
 router.get("/users", userController.getUsers);
-router.post("/refresh", userController.refresh);
 
 // router.post("/check", scheduleController.checkReq);
 
