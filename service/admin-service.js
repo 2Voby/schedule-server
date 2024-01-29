@@ -2,6 +2,7 @@ const ApiError = require("../exceptions/api-error");
 const anoncementsModel = require("../models/anoncements-model");
 const bellsModel = require("../models/bells-model");
 const logsModel = require("../models/logs-model");
+const userModel = require("../models/user-model");
 
 class AdminService {
   async getOnline(user) {
@@ -13,6 +14,31 @@ class AdminService {
     return logs;
   }
 
+  async getAllUsers() {
+    let users = await userModel.find();
+    if (!users) {
+      throw ApiError.BadRequest("Інформацію не знайдено");
+    }
+    return users;
+  }
+
+  async removeUserRole(userId, deleteRole) {
+    if (!userId || !deleteRole) {
+      throw ApiError.BadRequest("Не проавильно введено інофрмацію!");
+    }
+    let user = await userModel.findOne({ _id: userId });
+    if (!user) {
+      throw ApiError.BadRequest("Користувача не знайдено");
+    }
+
+    let userRoles = user.roles;
+    userRoles = userRoles.filter((role) => {
+      return role != deleteRole;
+    });
+    user.roles = userRoles;
+    await user.save();
+    return user;
+  }
   async getAllAnoncements() {
     let anoncements = await anoncementsModel.find();
     if (!anoncements) {

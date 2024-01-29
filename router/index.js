@@ -76,6 +76,19 @@ router.post(
   adminController.deleteAnoncement
 );
 
+// owner
+router.get(
+  "/owner/users",
+  [authMiddleware, adminMiddleware],
+  adminController.getAllUsers
+);
+
+router.post(
+  "/owner/users/removeRole",
+  [authMiddleware, adminMiddleware],
+  adminController.removeUserRole
+);
+
 // settings
 router.post(
   "/admin/settings/bells",

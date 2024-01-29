@@ -14,6 +14,26 @@ class AdminController {
     }
   }
 
+  async getAllUsers(req, res, next) {
+    try {
+      const userData = await adminService.getAllUsers();
+      return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async removeUserRole(req, res, next) {
+    try {
+      let { userId, role } = req.body;
+
+      const userData = await adminService.removeUserRole(userId, role);
+      return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async getAllAnoncements(req, res, next) {
     try {
       const getAllAnoncements = await adminService.getAllAnoncements();
