@@ -39,6 +39,28 @@ class AdminService {
     await user.save();
     return user;
   }
+
+  async addRole(userId, roles) {
+    if (!userId || !roles) {
+      throw ApiError.BadRequest("Не проавильно введено інофрмацію!");
+    }
+    let user = await userModel.findOne({ _id: userId });
+    if (!user) {
+      throw ApiError.BadRequest("Користувача не знайдено");
+    }
+
+    let userRoles = user.roles;
+
+    roles.forEach((role) => {
+      userRoles.push(role);
+    });
+
+    let uniqueRoles = [...new Set(userRoles)];
+
+    user.roles = uniqueRoles;
+    await user.save();
+    return user;
+  }
   async getAllAnoncements() {
     let anoncements = await anoncementsModel.find();
     if (!anoncements) {

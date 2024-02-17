@@ -84,6 +84,12 @@ router.get(
 );
 
 router.post(
+  "/owner/users/addRole",
+  [authMiddleware, adminMiddleware],
+  adminController.addRole
+);
+
+router.post(
   "/owner/users/removeRole",
   [authMiddleware, adminMiddleware],
   adminController.removeUserRole

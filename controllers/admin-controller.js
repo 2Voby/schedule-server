@@ -34,6 +34,17 @@ class AdminController {
     }
   }
 
+  async addRole(req, res, next) {
+    try {
+      let { userId, roles } = req.body;
+
+      const userData = await adminService.addRole(userId, roles);
+      return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async getAllAnoncements(req, res, next) {
     try {
       const getAllAnoncements = await adminService.getAllAnoncements();
